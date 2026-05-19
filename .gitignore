@@ -1,6 +1,46 @@
-echo ~$*.docx>>.gitignore
-echo ~$*.doc>>.gitignore
-echo ~WRL*.tmp>>.gitignore
-echo *.tmp>>.gitignore~WRL*.tmp
+# Archivos temporales de Microsoft Office / Word
+~$*
+~WRL*.tmp
 *.tmp
-~$*.docx
+*.wbk
+*.asd
+
+# Archivos temporales de Windows
+Thumbs.db
+Desktop.ini
+
+# OneDrive / sincronización
+*.tmp
+*.TMP
+
+# VS Code
+.vscode/
+
+# IntelliJ / NetBeans / Eclipse
+.idea/
+*.iml
+nbproject/private/
+.project
+.classpath
+.settings/
+
+# Java / compilados
+*.class
+target/
+build/
+out/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Sistema
+.DS_Store
