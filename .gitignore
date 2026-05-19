@@ -1,4 +1,6 @@
 echo ~$*.docx>>.gitignore
 echo ~$*.doc>>.gitignore
 echo ~WRL*.tmp>>.gitignore
-echo *.tmp>>.gitignore
+echo *.tmp>>.gitignore~WRL*.tmp
+*.tmp
+~$*.docx
