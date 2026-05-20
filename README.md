@@ -88,7 +88,7 @@ Este portafolio representa mi avance técnico durante el curso y mi compromiso c
 
 ```txt
 ╔══════════════════════════════════════╗
-║        THINK. CODE. TEST. IMPROVE.  ║
+║        THINK. CODE. TEST. IMPROVE.   ║
 ╚══════════════════════════════════════╝
 ```
 
