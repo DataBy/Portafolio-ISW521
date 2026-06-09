@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Monitoreo Hídrico | AcueductosIoT</title>
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    /*
+      Estilos embebidos de respaldo.
+      Así el HTML conserva el diseño incluso si se abre directamente desde un ZIP
+      o desde una ruta temporal donde el navegador no encuentre styles.css.
+    */
+    :root {
+      --blue-900: #0b2545;
+      --blue-800: #0f3d68;
+      --blue-700: #0f5f99;
+      --blue-600: #147ec1;
+      --blue-100: #e8f6ff;
+      --blue-050: #f5fbff;
+      --aqua: #55c7f3;
+      --green: #1f9d63;
+      --yellow: #d98c00;
+      --red: #ca4a38;
+      --ink: #132235;
+      --muted: #647386;
+      --line: #d9e7f1;
+      --card: #ffffff;
+      --surface: #eef7fc;
+      --shadow: 0 14px 34px rgba(9, 38, 73, 0.10);
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --header-height: 64px;
+      --footer-height: 54px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(85, 199, 243, 0.24), transparent 28rem),
+        linear-gradient(135deg, #f9fdff 0%, var(--surface) 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .site-header {
+      flex: 0 0 auto;
+      min-height: var(--header-height);
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid rgba(217, 231, 241, 0.9);
+      box-shadow: 0 10px 30px rgba(9, 38, 73, 0.06);
+      backdrop-filter: blur(18px);
+    }
+
+    /*
+      Ejercicio 1 — Navbar con Flexbox.
+      justify-content: space-between reparte los tres bloques principales del nav:
+      logo a la izquierda, enlaces al centro y botón al extremo derecho.
+      align-items: center centra esos bloques verticalmente sobre el eje cruzado.
+    */
+    .navbar {
+      width: min(1280px, 100%);
+      min-height: var(--header-height);
+      margin: 0 auto;
+      padding: 10px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 190px;
+      color: var(--blue-900);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--blue-600), var(--aqua));
+      box-shadow: 0 8px 18px rgba(20, 126, 193, 0.28);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 0;
+      padding: 5px;
+      list-style: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      color: var(--blue-800);
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: #ffffff;
+      background: var(--blue-700);
+      transform: translateY(-1px);
+    }
+
+    .btn-logout {
+      min-width: 130px;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--blue-800), var(--blue-600));
+      box-shadow: 0 10px 22px rgba(15, 95, 153, 0.23);
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .btn-logout:hover,
+    .btn-logout:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 95, 153, 0.30);
+    }
+
+    /*
+      Ejercicio 3 — Layout principal de tres columnas.
+      flex: 1 / flex: 3 / flex: 1 divide el espacio libre en cinco porciones.
+      No se usan width en píxeles para construir las columnas.
+    */
+    .dashboard-layout {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: row;
+      gap: 14px;
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      padding: 14px 18px;
+    }
+
+    .sidebar,
+    .alert-panel,
+    .hero-section,
+    .sensor-section,
+    .charts-section,
+    .chart-card,
+    .sensor-card,
+    .alert {
+      border: 1px solid rgba(217, 231, 241, 0.92);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .sidebar-title {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-nav,
+    .sidebar-nav ul {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .sidebar-nav ul {
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 9px 11px;
+      border-radius: 14px;
+      color: var(--blue-800);
+      background: var(--blue-050);
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a:focus-visible {
+      background: var(--blue-100);
+      transform: translateX(2px);
+    }
+
+    .sidebar-note {
+      margin-top: auto;
+      padding: 12px;
+      border-radius: 15px;
+      color: var(--muted);
+      background: linear-gradient(135deg, var(--blue-050), #ffffff);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .main-content {
+      flex: 3;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .alert-panel {
+      flex: 1;
+      min-width: 190px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    .alert-panel h2 {
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    /*
+      Respuestas de reflexión del Ejercicio 3:
+      1. flex: 1 y flex-grow: 1 no son exactamente lo mismo. flex: 1 es shorthand
+         y equivale normalmente a flex: 1 1 0%; flex-grow: 1 solo define crecimiento.
+      2. Para que el sidebar nunca sea menor a 180px, se agrega min-width: 180px.
+      3. Si main-content cambia de flex: 3 a flex: 5, toma más porciones del espacio
+         disponible y las columnas laterales se ven proporcionalmente más angostas.
+    */
+
+    .hero-section {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 18px;
+    }
+
+    .hero-section h1,
+    .section-heading h2 {
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-section h1 {
+      font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+    }
+
+    .hero-section p:last-child {
+      max-width: 550px;
+      margin: 5px 0 0;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .hero-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      color: var(--green);
+      background: #edf9f2;
+      font-size: 0.88rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .eyebrow {
+      margin: 0 0 5px;
+      color: var(--blue-700);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+
+    .sensor-section,
+    .charts-section {
+      padding: 15px;
+    }
+
+    .sensor-section {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .charts-section {
+      flex: 0 0 auto;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+      font-size: 1.18rem;
+    }
+
+    .section-summary {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    /*
+      Ejercicio 2 — Cuadrícula flexible de sensores.
+      flex-wrap: wrap permite que las tarjetas salten a otra fila cuando no caben.
+      gap crea separación real entre filas y columnas sin usar márgenes como hack.
+
+      Diferencia solicitada:
+      align-items alinea los elementos dentro de cada fila del contenedor flex.
+      align-content distribuye el espacio entre las filas completas cuando hay wrap
+      y existe espacio vertical sobrante en el contenedor.
+    */
+    .sensor-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      align-content: flex-start;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .sensor-card {
+      flex: 1 1 calc(33.333% - 12px);
+      min-width: 150px;
+      padding: 14px;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .sensor-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(9, 38, 73, 0.13);
+    }
+
+    .sensor-card h3 {
+      margin: 0 0 8px;
+      color: var(--blue-900);
+      font-size: 0.9rem;
+      line-height: 1.25;
+    }
+
+    .sensor-value {
+      margin: 0;
+      color: var(--blue-700);
+      font-size: clamp(1.65rem, 3.2vw, 2.45rem);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .sensor-label {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .sensor-card-warning {
+      border-color: rgba(217, 140, 0, 0.35);
+      background: linear-gradient(135deg, #fff8ea, #ffffff);
+    }
+
+    .sensor-card-warning .sensor-value {
+      color: var(--yellow);
+    }
+
+    .sensor-card-success {
+      border-color: rgba(31, 157, 99, 0.32);
+      background: linear-gradient(135deg, #effaf2, #ffffff);
+    }
+
+    .sensor-card-success .sensor-value {
+      color: var(--green);
+    }
+
+    .chart-board {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .chart-card {
+      flex: 1 1 260px;
+      padding: 14px;
+    }
+
+    .chart-card h3 {
+      margin: 0 0 10px;
+      font-size: 0.92rem;
+    }
+
+    .bar-group {
+      min-height: 74px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 14px;
+      background: var(--blue-050);
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 999px 999px 0 0;
+      background: linear-gradient(180deg, var(--aqua), var(--blue-700));
+      animation: water-rise 2.6s ease-in-out infinite;
+    }
+
+    .bar-small {
+      min-height: 28px;
+    }
+
+    .bar-medium {
+      min-height: 46px;
+      animation-delay: 120ms;
+    }
+
+    .bar-large {
+      min-height: 62px;
+      animation-delay: 240ms;
+    }
+
+    .line-chart {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 14px;
+      background: var(--blue-050);
+    }
+
+    .line-chart span {
+      flex: 1;
+      min-height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue-700), var(--aqua));
+      animation: wave-line 2.5s ease-in-out infinite;
+    }
+
+    .line-chart span:nth-child(1) { align-self: flex-end; }
+    .line-chart span:nth-child(2) { align-self: center; animation-delay: 100ms; }
+    .line-chart span:nth-child(3) { align-self: flex-start; animation-delay: 200ms; }
+    .line-chart span:nth-child(4) { align-self: center; animation-delay: 300ms; }
+
+    .alert {
+      padding: 13px;
+    }
+
+    .alert h3 {
+      margin: 0 0 6px;
+      font-size: 0.92rem;
+    }
+
+    .alert p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.38;
+    }
+
+    .alert-warning {
+      border-color: rgba(217, 140, 0, 0.35);
+      background: #fff8ea;
+    }
+
+    .alert-success {
+      border-color: rgba(31, 157, 99, 0.32);
+      background: #effaf2;
+    }
+
+    .alert-info {
+      border-color: rgba(20, 126, 193, 0.28);
+      background: #eef8ff;
+    }
+
+    .site-footer {
+      flex: 0 0 auto;
+      min-height: var(--footer-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 8px 18px;
+      color: var(--blue-900);
+      background: rgba(255, 255, 255, 0.88);
+      border-top: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .site-footer p {
+      margin: 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .water-strip {
+      flex: 0 1 360px;
+      min-width: 180px;
+      height: 34px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #f7fcff, var(--blue-100));
+      border: 1px solid rgba(85, 199, 243, 0.25);
+      overflow: hidden;
+    }
+
+    .water-strip span {
+      flex: 1;
+      min-width: 16px;
+      height: 14px;
+      border-radius: 999px 999px 8px 8px;
+      background: linear-gradient(180deg, rgba(85, 199, 243, 0.95), rgba(20, 126, 193, 0.82));
+      transform-origin: bottom;
+      animation: float-water 2.2s ease-in-out infinite;
+    }
+
+    .water-strip span:nth-child(2) { animation-delay: 140ms; }
+    .water-strip span:nth-child(3) { animation-delay: 280ms; }
+    .water-strip span:nth-child(4) { animation-delay: 420ms; }
+    .water-strip span:nth-child(5) { animation-delay: 560ms; }
+    .water-strip span:nth-child(6) { animation-delay: 700ms; }
+    .water-strip span:nth-child(7) { animation-delay: 840ms; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.7); opacity: 0.25; }
+    }
+
+    @keyframes water-rise {
+      0%, 100% { transform: scaleY(0.88); }
+      50% { transform: scaleY(1.05); }
+    }
+
+    @keyframes wave-line {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes float-water {
+      0%, 100% { transform: translateY(5px) scaleY(0.72); }
+      50% { transform: translateY(-4px) scaleY(1.18); }
+    }
+
+    @media (min-width: 769px) {
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .dashboard-layout {
+        height: calc(100vh - var(--header-height) - var(--footer-height));
+        overflow: hidden;
+      }
+
+      .main-content,
+      .sensor-section,
+      .sidebar,
+      .alert-panel {
+        overflow: hidden;
+      }
+    }
+
+    /*
+      Ejercicio 4 — Responsive móvil.
+      La media query cambia el eje principal del dashboard de fila a columna.
+      min-height se usa en lugar de height: 100vh porque permite crecer si el contenido
+      necesita más espacio. height: 100vh podría cortar o forzar overflow innecesario.
+    */
+    @media (max-width: 900px) and (min-width: 769px) {
+      .navbar { padding-inline: 14px; }
+      .nav-logo { min-width: 150px; }
+      .nav-links a { padding-inline: 10px; font-size: 0.86rem; }
+      .btn-logout { min-width: 112px; padding-inline: 12px; }
+      .dashboard-layout { gap: 10px; padding: 10px; }
+      .sidebar, .alert-panel { min-width: 160px; padding: 12px; }
+      .sensor-card { min-width: 118px; padding: 10px; }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        min-height: 100vh;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-logo,
+      .btn-logout {
+        min-width: 0;
+        justify-content: center;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        border-radius: 18px;
+      }
+
+      .dashboard-layout {
+        flex-direction: column;
+      }
+
+      .sidebar,
+      .alert-panel {
+        flex: none;
+        width: 100%;
+        min-height: auto;
+        min-width: 0;
+      }
+
+      .sidebar-nav ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .sidebar-nav li {
+        flex: 1 1 150px;
+      }
+
+      .sidebar-note {
+        margin-top: 12px;
+      }
+
+      .main-content {
+        flex: 1;
+      }
+
+      .hero-section,
+      .section-heading,
+      .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-status {
+        align-self: flex-start;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+      }
+
+      .sensor-card,
+      .chart-card {
+        flex-basis: 100%;
+      }
+
+      .site-footer p {
+        white-space: normal;
+      }
+
+      .water-strip {
+        width: 100%;
+        flex-basis: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Navegación principal">
+      <a class="nav-logo" href="#" aria-label="Inicio de AcueductosIoT">
+        <span class="logo-mark" aria-hidden="true">💧</span>
+        <span>AcueductosIoT</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#sensores">Sensores</a></li>
+        <li><a href="#alertas">Alertas</a></li>
+        <li><a href="#reportes">Reportes</a></li>
+      </ul>
+
+      <button class="btn-logout" type="button">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <div class="dashboard-layout" id="inicio">
+    <aside class="sidebar" aria-label="Menú lateral del dashboard">
+      <nav class="sidebar-nav" aria-label="Secciones de monitoreo">
+        <h2 class="sidebar-title">Panel hídrico</h2>
+        <ul>
+          <li><a href="#resumen">📊 Resumen</a></li>
+          <li><a href="#tanques">💧 Tanques</a></li>
+          <li><a href="#presiones">⚡ Presiones</a></li>
+          <li><a href="#calidad">🧪 Calidad</a></li>
+          <li><a href="#configuracion">⚙️ Configuración</a></li>
+        </ul>
+      </nav>
+      <p class="sidebar-note">Red IoT activa · 14 nodos enlazados · Latencia promedio 42 ms.</p>
+    </aside>
+
+    <main class="main-content">
+      <section class="hero-section" aria-labelledby="dashboard-title">
+        <div>
+          <p class="eyebrow">Monitoreo en tiempo real</p>
+          <h1 id="dashboard-title">Dashboard de Monitoreo Hídrico</h1>
+          <p>
+            Vista operativa de sensores IoT instalados en tanques, tuberías y pozos
+            de una red comunitaria de acueductos.
+          </p>
+        </div>
+        <div class="hero-status" aria-label="Sistema sincronizado">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Sistema estable
+        </div>
+      </section>
+
+      <section class="sensor-section" id="sensores" aria-labelledby="sensor-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Sensores IoT</p>
+            <h2 id="sensor-title">Estado actual de mediciones</h2>
+          </div>
+          <p class="section-summary">6 sensores activos · Última sincronización hace 2 minutos</p>
+        </div>
+
+        <div class="sensor-grid">
+          <article class="sensor-card">
+            <h3>💧 Nivel de Tanque Principal</h3>
+            <p class="sensor-value">73%</p>
+            <p class="sensor-label">Sector A — Actualizado hace 2 min</p>
+          </article>
+
+          <article class="sensor-card sensor-card-warning">
+            <h3>⚡ Presión de Red</h3>
+            <p class="sensor-value">31 PSI</p>
+            <p class="sensor-label">Calle 2 — Mínimo recomendado: 35 PSI</p>
+          </article>
+
+          <article class="sensor-card">
+            <h3>🧪 Calidad del Agua</h3>
+            <p class="sensor-value">0.7</p>
+            <p class="sensor-label">mg/L de cloro residual — En rango normal</p>
+          </article>
+
+          <article class="sensor-card">
+            <h3>🌊 Caudal de Entrada</h3>
+            <p class="sensor-value">118</p>
+            <p class="sensor-label">L/min · Naciente Sur — Flujo estable</p>
+          </article>
+
+          <article class="sensor-card">
+            <h3>🌡️ Temperatura del Agua</h3>
+            <p class="sensor-value">24.6 °C</p>
+            <p class="sensor-label">Promedio de red — Sin variaciones críticas</p>
+          </article>
+
+          <article class="sensor-card sensor-card-success">
+            <h3>🚰 Válvula de Emergencia</h3>
+            <p class="sensor-value">Abierta</p>
+            <p class="sensor-label">Sector B — Operación manual disponible</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="charts-section" id="reportes" aria-labelledby="charts-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Reportes</p>
+            <h2 id="charts-title">Gráficos de Monitoreo en Tiempo Real</h2>
+          </div>
+        </div>
+
+        <div class="chart-board" role="img" aria-label="Representación visual simulada de gráficos de sensores">
+          <div class="chart-card">
+            <h3>Consumo por hora</h3>
+            <div class="bar-group" aria-hidden="true">
+              <span class="bar bar-small"></span>
+              <span class="bar bar-medium"></span>
+              <span class="bar bar-large"></span>
+              <span class="bar bar-medium"></span>
+              <span class="bar bar-small"></span>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3>Presión promedio</h3>
+            <div class="line-chart" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="alert-panel" id="alertas" aria-labelledby="alert-title">
+      <h2 id="alert-title">🔔 Alertas Activas</h2>
+
+      <article class="alert alert-warning">
+        <h3>Presión baja</h3>
+        <p>Sector B reporta 31 PSI. Revisar válvulas secundarias.</p>
+      </article>
+
+      <article class="alert alert-success">
+        <h3>Cloro en rango normal</h3>
+        <p>El sensor de calidad indica 0.7 mg/L.</p>
+      </article>
+
+      <article class="alert alert-info">
+        <h3>Mantenimiento programado</h3>
+        <p>Revisión del tanque principal mañana a las 8:00 a.m.</p>
+      </article>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+    <p>AcueductosIoT · Dashboard académico de monitoreo hídrico</p>
+    <div class="water-strip" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </footer>
+</body>
+</html>
