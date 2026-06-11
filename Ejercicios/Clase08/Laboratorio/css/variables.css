@@ -1,0 +1,86 @@
+:root {
+  --bg: #f6f8fc;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-solid: #ffffff;
+  --text: #172033;
+  --muted: #697185;
+  --line: rgba(29, 44, 76, 0.12);
+  --accent: #ff3b4f;
+  --accent-strong: #d92b3d;
+  --focus: #007aff;
+  --shadow: 0 24px 70px rgba(36, 45, 70, 0.14);
+  --inset: inset 0 1px 1px rgba(255, 255, 255, 0.86);
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 17px;
+  --radius-sm: 12px;
+  --paint-tint: rgba(227, 37, 55, 0.14);
+  --header-gradient: radial-gradient(circle at top left, rgba(0,122,255,0.18), transparent 34rem), radial-gradient(circle at bottom right, rgba(255,59,79,0.13), transparent 32rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  background: var(--header-gradient), var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+button, label { font: inherit; }
+button, label[for] { cursor: pointer; }
+
+img { max-width: 100%; display: block; }
+
+.state-control {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: -8rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  background: var(--focus);
+  border-radius: 999px;
+  text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: clamp(1.35rem, 2.4vw, 2.35rem); letter-spacing: -0.045em; }
+h2 { margin-bottom: 1rem; font-size: clamp(1.05rem, 1.6vw, 1.35rem); letter-spacing: -0.025em; }
+h3 { margin-bottom: 0.25rem; }
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow), var(--inset);
+  backdrop-filter: blur(24px);
+}
+
+button:focus-visible,
+label[for]:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}

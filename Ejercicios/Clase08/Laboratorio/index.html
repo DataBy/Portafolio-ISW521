@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Showroom interactivo sin JavaScript para cotizar enderezado y pintura con fotos reales de vehículos Toyota.">
+  <title>Auto Style CR · Showroom Real CSS</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/palette.css">
+  <link rel="stylesheet" href="css/interactions.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <input class="state-control" type="radio" name="car-model" id="model-corolla" checked>
+<input class="state-control" type="radio" name="car-model" id="model-hilux">
+<input class="state-control" type="radio" name="car-model" id="model-rav4">
+<input class="state-control" type="radio" name="car-model" id="model-camry">
+<input class="state-control" type="radio" name="car-model" id="model-supra">
+<input class="state-control" type="radio" name="car-model" id="model-prado">
+<input class="state-control" type="radio" name="car-model" id="model-yaris">
+<input class="state-control" type="radio" name="angle" id="angle-front" checked>
+<input class="state-control" type="radio" name="angle" id="angle-side">
+<input class="state-control" type="radio" name="angle" id="angle-rear">
+<input class="state-control" type="checkbox" id="lights-toggle">
+<input class="state-control" type="radio" name="category" id="cat-all" checked>
+<input class="state-control" type="radio" name="category" id="cat-sedan">
+<input class="state-control" type="radio" name="category" id="cat-suv">
+<input class="state-control" type="radio" name="category" id="cat-pickup">
+<input class="state-control" type="radio" name="category" id="cat-sport">
+<input class="state-control" type="radio" name="ui-style" id="style-clay" checked>
+<input class="state-control" type="radio" name="ui-style" id="style-premium">
+<input class="state-control" type="radio" name="ui-style" id="style-sport">
+<input class="state-control" type="radio" name="paint" id="paint-red" checked>
+<input class="state-control" type="radio" name="paint" id="paint-white">
+<input class="state-control" type="radio" name="paint" id="paint-black">
+<input class="state-control" type="radio" name="paint" id="paint-blue">
+<input class="state-control" type="radio" name="paint" id="paint-green">
+<input class="state-control" type="radio" name="paint" id="paint-orange">
+<input class="state-control" type="radio" name="paint" id="paint-pearl">
+<input class="state-control" type="checkbox" id="a11y-large">
+<input class="state-control" type="checkbox" id="a11y-contrast">
+<input class="state-control" type="checkbox" id="a11y-motion">
+
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Taller Auto Style CR</p>
+      <h1>Cotizador interactivo con fotos reales · Solo HTML + CSS</h1>
+    </div>
+
+    <nav class="access-tools" aria-label="Accesibilidad y estilo visual">
+      <label class="tool-chip" for="a11y-large">Texto grande</label>
+      <label class="tool-chip" for="a11y-contrast">Alto contraste</label>
+      <label class="tool-chip" for="a11y-motion">Menos movimiento</label>
+    </nav>
+  </header>
+
+  <main class="showroom-grid" id="contenido">
+    <aside class="panel selector-panel" aria-label="Selector de modelos, categorías y ángulos">
+      <section class="panel-block">
+        <p class="eyebrow">Categorías</p>
+        <div class="category-list" role="group" aria-label="Filtrar modelos por categoría">
+          <label for="cat-all">Todos</label>
+          <label for="cat-sedan">Sedanes</label>
+          <label for="cat-suv">SUV</label>
+          <label for="cat-pickup">Pickups</label>
+          <label for="cat-sport">Deportivos</label>
+        </div>
+      </section>
+
+      <section class="panel-block">
+        <p class="eyebrow">Modelo</p>
+        <div class="model-list" role="group" aria-label="Modelos Toyota disponibles">
+          
+<label class="model-option cat-sport cat-sedan" for="model-corolla">
+  <span class="model-kicker">Deportivo compacto</span>
+  <strong>Toyota GR Corolla</strong>
+  <small>Hot hatch · Circuit Edition · 2024</small>
+</label>
+<label class="model-option cat-pickup" for="model-hilux">
+  <span class="model-kicker">Pickup</span>
+  <strong>Toyota Hilux 4x4</strong>
+  <small>Trabajo pesado · 4x4 · 2024</small>
+</label>
+<label class="model-option cat-suv" for="model-rav4">
+  <span class="model-kicker">SUV híbrido</span>
+  <strong>Toyota RAV4 Hybrid</strong>
+  <small>SUV familiar · Hybrid · 2024</small>
+</label>
+<label class="model-option cat-sedan" for="model-camry">
+  <span class="model-kicker">Sedán ejecutivo</span>
+  <strong>Toyota Camry</strong>
+  <small>Sedán · acabado ejecutivo · 2025</small>
+</label>
+<label class="model-option cat-sport" for="model-supra">
+  <span class="model-kicker">Deportivo</span>
+  <strong>Toyota GR Supra</strong>
+  <small>Coupé · alto detalle · 2024</small>
+</label>
+<label class="model-option cat-suv" for="model-prado">
+  <span class="model-kicker">SUV 4x4</span>
+  <strong>Toyota Land Cruiser Prado</strong>
+  <small>SUV robusto · 4x4 · 2024</small>
+</label>
+<label class="model-option cat-suv" for="model-yaris">
+  <span class="model-kicker">SUV compacto</span>
+  <strong>Toyota Yaris Cross</strong>
+  <small>Compacto urbano · Hybrid · 2024</small>
+</label>
+        </div>
+      </section>
+
+      <section class="panel-block">
+        <p class="eyebrow">Ángulo</p>
+        <div class="angle-list" role="group" aria-label="Ángulo de carrocería">
+          <label for="angle-front">Frente</label>
+          <label for="angle-side">Perfil</label>
+          <label for="angle-rear">Atrás</label>
+        </div>
+      </section>
+    </aside>
+
+    <section class="panel vehicle-panel" aria-labelledby="vehicle-title">
+      <div class="vehicle-toolbar">
+        <div>
+          <p class="eyebrow">Área principal · CSS Grid Overlay</p>
+          <h2 id="vehicle-title">Inspección visual con fotografías reales</h2>
+        </div>
+
+        <label class="light-button" for="lights-toggle">
+          <span class="lights-off-text">Encender luces</span>
+          <span class="lights-on-text">Apagar luces</span>
+        </label>
+      </div>
+
+      <figure class="vehicle-stage">
+        <div class="paint-tint" aria-hidden="true"></div>
+        <div class="light-effects" aria-hidden="true">
+          <span class="beam beam-left"></span>
+          <span class="beam beam-right"></span>
+        </div>
+        
+<article class="vehicle-set vehicle-corolla" aria-label="Toyota GR Corolla">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2024%20Toyota%20GR%20Corolla%20Circuit%20Edition%2C%20front%20left.jpg" alt="Frente real de Toyota GR Corolla" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2024%20Toyota%20GR%20Corolla%20Circuit%20Edition%2C%20front%20left%2C%2006-08-2024.jpg" alt="Perfil real de Toyota GR Corolla" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2024%20Toyota%20GR%20Corolla%20Circuit%20Edition%2C%20rear%20left.jpg" alt="Atrás real de Toyota GR Corolla" loading="lazy">
+</article>
+<article class="vehicle-set vehicle-hilux" aria-label="Toyota Hilux 4x4">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2016%20Toyota%20HiLux%20Invincible%20D-4D%204WD%202.4%20Front.jpg" alt="Frente real de Toyota Hilux 4x4" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2016%20Toyota%20HiLux%20Invincible%20D-4D%204WD%202.4%20Side.jpg" alt="Perfil real de Toyota Hilux 4x4" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2016%20Toyota%20HiLux%20Invincible%20D-4D%204WD%202.4%20Rear.jpg" alt="Atrás real de Toyota Hilux 4x4" loading="lazy">
+</article>
+<article class="vehicle-set vehicle-rav4" aria-label="Toyota RAV4 Hybrid">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2016%20Toyota%20RAV4%20Hybrid%202.5%20VVT-i%20marlingrau-metallic%20Frontalansicht.jpg" alt="Frente real de Toyota RAV4 Hybrid" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2016%20Toyota%20RAV4%20Hybrid%202.5%20VVT-i%20marlingrau-metallic%20Seitenansicht.jpg" alt="Perfil real de Toyota RAV4 Hybrid" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2016%20Toyota%20RAV4%20Hybrid%202.5%20VVT-i%20marlingrau-metallic%20Heckansicht.jpg" alt="Atrás real de Toyota RAV4 Hybrid" loading="lazy">
+</article>
+<article class="vehicle-set vehicle-camry" aria-label="Toyota Camry">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2020%20Toyota%20Camry%202.5%20%28Front%20view%29.jpg" alt="Frente real de Toyota Camry" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2018%20Toyota%20Camry%202.jpg" alt="Perfil real de Toyota Camry" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2018%20Toyota%20Camry%202.5%20G%20%28Rear%29.jpg" alt="Atrás real de Toyota Camry" loading="lazy">
+</article>
+<article class="vehicle-set vehicle-supra" aria-label="Toyota GR Supra">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/D%C3%BClmen%2C%20Auto%20Bertels%2C%20Toyota%20GR%20Supra%20--%202021%20--%209552-4.jpg" alt="Frente real de Toyota GR Supra" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/D%C3%BClmen%2C%20Auto%20Bertels%2C%20Toyota%20GR%20Supra%20--%202021%20--%209565.jpg" alt="Perfil real de Toyota GR Supra" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/D%C3%BClmen%2C%20Auto%20Bertels%2C%20Toyota%20GR%20Supra%20--%202021%20--%209576.jpg" alt="Atrás real de Toyota GR Supra" loading="lazy">
+</article>
+<article class="vehicle-set vehicle-prado" aria-label="Toyota Land Cruiser Prado">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota%20Land%20Cruiser%20Prado%20%28second%20generation%29%20%28front%29%2C%20Serdang.jpg" alt="Frente real de Toyota Land Cruiser Prado" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota%20Land%20Cruiser%203.0%20D-4D%20Life%20%28J15%29%20%E2%80%93%20Seitenansicht%2C%2017.%20M%C3%A4rz%202012%2C%20Ratingen.jpg" alt="Perfil real de Toyota Land Cruiser Prado" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota%20Land%20Cruiser%20Prado%20%28second%20generation%29%20%28rear%29%2C%20Serdang.jpg" alt="Atrás real de Toyota Land Cruiser Prado" loading="lazy">
+</article>
+<article class="vehicle-set vehicle-yaris" aria-label="Toyota Yaris Cross">
+  <img class="vehicle-photo photo-front" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2023%20Toyota%20Yaris%20Cross%201.5%20S%20HV%20with%20GR%20Parts.jpg" alt="Frente real de Toyota Yaris Cross" loading="lazy"><img class="vehicle-photo photo-side" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Toyota%20Yaris%20Cross%20S%20HEV%20GR%20%282024-02-21%29.jpg" alt="Perfil real de Toyota Yaris Cross" loading="lazy"><img class="vehicle-photo photo-rear" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/2023%20Toyota%20Yaris%20Cross%20S%20HEV%20GR%20%282024-04-12%29%20rear%20view.jpg" alt="Atrás real de Toyota Yaris Cross" loading="lazy">
+</article>
+      </figure>
+
+      <div class="style-switcher" role="group" aria-label="Estilos visuales">
+        <span>Estilo:</span>
+        <label for="style-clay">Clay Soft</label>
+        <label for="style-premium">Premium azul</label>
+        <label for="style-sport">Sport rojo</label>
+      </div>
+    </section>
+
+    <aside class="panel quote-panel" aria-label="Resumen de cotización">
+      <p class="eyebrow">Cotización</p>
+      <h2>Resumen del servicio</h2>
+      
+<section class="quote-detail quote-corolla">
+  <h3>Toyota GR Corolla</h3>
+  <p>Hot hatch · Circuit Edition · 2024</p>
+  <dl class="quote-list"><div><dt>Enderezado frontal</dt><dd>₡96.000</dd></div>
+<div><dt>Pintura premium</dt><dd>₡346.000</dd></div>
+<div><dt>Pulido deportivo</dt><dd>₡42.000</dd></div>
+<div><dt>Sellado cerámico</dt><dd>₡34.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡518.000</strong></div>
+</section>
+<section class="quote-detail quote-hilux">
+  <h3>Toyota Hilux 4x4</h3>
+  <p>Trabajo pesado · 4x4 · 2024</p>
+  <dl class="quote-list"><div><dt>Enderezado frontal</dt><dd>₡125.000</dd></div>
+<div><dt>Pintura cabina y batea</dt><dd>₡420.000</dd></div>
+<div><dt>Masilla y lijado</dt><dd>₡77.000</dd></div>
+<div><dt>Protección inferior</dt><dd>₡50.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡672.000</strong></div>
+</section>
+<section class="quote-detail quote-rav4">
+  <h3>Toyota RAV4 Hybrid</h3>
+  <p>SUV familiar · Hybrid · 2024</p>
+  <dl class="quote-list"><div><dt>Revisión de paneles</dt><dd>₡88.000</dd></div>
+<div><dt>Pintura completa</dt><dd>₡376.000</dd></div>
+<div><dt>Corrección de molduras</dt><dd>₡61.000</dd></div>
+<div><dt>Acabado protector</dt><dd>₡68.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡593.000</strong></div>
+</section>
+<section class="quote-detail quote-camry">
+  <h3>Toyota Camry</h3>
+  <p>Sedán · acabado ejecutivo · 2025</p>
+  <dl class="quote-list"><div><dt>Enderezado capó</dt><dd>₡90.000</dd></div>
+<div><dt>Pintura completa</dt><dd>₡358.000</dd></div>
+<div><dt>Pulido de ópticas</dt><dd>₡38.000</dd></div>
+<div><dt>Sellador final</dt><dd>₡62.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡548.000</strong></div>
+</section>
+<section class="quote-detail quote-supra">
+  <h3>Toyota GR Supra</h3>
+  <p>Coupé · alto detalle · 2024</p>
+  <dl class="quote-list"><div><dt>Revisión aerodinámica</dt><dd>₡116.000</dd></div>
+<div><dt>Pintura bicapa</dt><dd>₡462.000</dd></div>
+<div><dt>Corrección deportiva</dt><dd>₡84.000</dd></div>
+<div><dt>Barniz premium</dt><dd>₡62.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡724.000</strong></div>
+</section>
+<section class="quote-detail quote-prado">
+  <h3>Toyota Land Cruiser Prado</h3>
+  <p>SUV robusto · 4x4 · 2024</p>
+  <dl class="quote-list"><div><dt>Enderezado estructural</dt><dd>₡136.000</dd></div>
+<div><dt>Pintura SUV completa</dt><dd>₡432.000</dd></div>
+<div><dt>Molduras y defensas</dt><dd>₡76.000</dd></div>
+<div><dt>Protección off-road</dt><dd>₡54.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡698.000</strong></div>
+</section>
+<section class="quote-detail quote-yaris">
+  <h3>Toyota Yaris Cross</h3>
+  <p>Compacto urbano · Hybrid · 2024</p>
+  <dl class="quote-list"><div><dt>Enderezado liviano</dt><dd>₡72.000</dd></div>
+<div><dt>Pintura completa</dt><dd>₡315.000</dd></div>
+<div><dt>Corrección plástica</dt><dd>₡41.000</dd></div>
+<div><dt>Sellado protector</dt><dd>₡54.000</dd></div></dl>
+  <div class="quote-total"><span>Total</span><strong>₡482.000</strong></div>
+</section>
+      <button class="primary-button" type="button">Generar cotización</button>
+    </aside>
+
+    <section class="panel palette-panel" aria-labelledby="palette-title">
+      <div class="palette-copy">
+        <p class="eyebrow">Flexbox</p>
+        <h2 id="palette-title">Paleta visual de acabado</h2>
+        <p>La foto permanece real; el color aplica una capa de vista previa sobre el área principal.</p>
+      </div>
+      <div class="paint-palette" role="group" aria-label="Paleta de pintura">
+        <label class="paint-swatch swatch-red" for="paint-red">Rojo</label>
+        <label class="paint-swatch swatch-white" for="paint-white">Blanco</label>
+        <label class="paint-swatch swatch-black" for="paint-black">Negro</label>
+        <label class="paint-swatch swatch-blue" for="paint-blue">Azul</label>
+        <label class="paint-swatch swatch-green" for="paint-green">Verde</label>
+        <label class="paint-swatch swatch-orange" for="paint-orange">Naranja</label>
+        <label class="paint-swatch swatch-pearl" for="paint-pearl">Perla</label>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>ISW-521 · Showroom interactivo · Sin JavaScript</span>
+    <span>Fotos enlazadas desde Wikimedia Commons · ver assets/img/REFERENCIAS.md</span>
+  </footer>
+</body>
+</html>

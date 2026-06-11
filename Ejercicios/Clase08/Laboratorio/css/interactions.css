@@ -1,0 +1,179 @@
+label[for]:hover,
+button:hover {
+  transform: translateY(-2px);
+}
+
+#cat-all:checked ~ .showroom-grid label[for="cat-all"],
+#cat-sedan:checked ~ .showroom-grid label[for="cat-sedan"],
+#cat-suv:checked ~ .showroom-grid label[for="cat-suv"],
+#cat-pickup:checked ~ .showroom-grid label[for="cat-pickup"],
+#cat-sport:checked ~ .showroom-grid label[for="cat-sport"],
+#angle-front:checked ~ .showroom-grid label[for="angle-front"],
+#angle-side:checked ~ .showroom-grid label[for="angle-side"],
+#angle-rear:checked ~ .showroom-grid label[for="angle-rear"],
+#style-clay:checked ~ .showroom-grid label[for="style-clay"],
+#style-premium:checked ~ .showroom-grid label[for="style-premium"],
+#style-sport:checked ~ .showroom-grid label[for="style-sport"],
+#a11y-large:checked ~ .site-header label[for="a11y-large"],
+#a11y-contrast:checked ~ .site-header label[for="a11y-contrast"],
+#a11y-motion:checked ~ .site-header label[for="a11y-motion"] {
+  color: #fff;
+  background: var(--text);
+  border-color: var(--text);
+}
+
+#cat-sedan:checked ~ .showroom-grid .model-option:not(.cat-sedan),
+#cat-suv:checked ~ .showroom-grid .model-option:not(.cat-suv),
+#cat-pickup:checked ~ .showroom-grid .model-option:not(.cat-pickup),
+#cat-sport:checked ~ .showroom-grid .model-option:not(.cat-sport) {
+  display: none;
+}
+
+#model-corolla:checked ~ .showroom-grid label[for="model-corolla"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-corolla:checked ~ .showroom-grid .vehicle-corolla { opacity: 1; pointer-events: auto; }
+#model-corolla:checked ~ .showroom-grid .quote-corolla { display: block; }
+
+#model-hilux:checked ~ .showroom-grid label[for="model-hilux"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-hilux:checked ~ .showroom-grid .vehicle-hilux { opacity: 1; pointer-events: auto; }
+#model-hilux:checked ~ .showroom-grid .quote-hilux { display: block; }
+
+#model-rav4:checked ~ .showroom-grid label[for="model-rav4"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-rav4:checked ~ .showroom-grid .vehicle-rav4 { opacity: 1; pointer-events: auto; }
+#model-rav4:checked ~ .showroom-grid .quote-rav4 { display: block; }
+
+#model-camry:checked ~ .showroom-grid label[for="model-camry"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-camry:checked ~ .showroom-grid .vehicle-camry { opacity: 1; pointer-events: auto; }
+#model-camry:checked ~ .showroom-grid .quote-camry { display: block; }
+
+#model-supra:checked ~ .showroom-grid label[for="model-supra"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-supra:checked ~ .showroom-grid .vehicle-supra { opacity: 1; pointer-events: auto; }
+#model-supra:checked ~ .showroom-grid .quote-supra { display: block; }
+
+#model-prado:checked ~ .showroom-grid label[for="model-prado"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-prado:checked ~ .showroom-grid .vehicle-prado { opacity: 1; pointer-events: auto; }
+#model-prado:checked ~ .showroom-grid .quote-prado { display: block; }
+
+#model-yaris:checked ~ .showroom-grid label[for="model-yaris"] {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  box-shadow: 0 18px 34px rgba(255,59,79,0.25);
+}
+#model-yaris:checked ~ .showroom-grid .vehicle-yaris { opacity: 1; pointer-events: auto; }
+#model-yaris:checked ~ .showroom-grid .quote-yaris { display: block; }
+
+#angle-front:checked ~ .showroom-grid .photo-front,
+#angle-side:checked ~ .showroom-grid .photo-side,
+#angle-rear:checked ~ .showroom-grid .photo-rear {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#lights-toggle:checked ~ .showroom-grid .light-effects { opacity: 1; }
+#lights-toggle:checked ~ .showroom-grid .vehicle-photo { filter: drop-shadow(0 28px 38px rgba(18, 28, 48, 0.18)) brightness(1.08) saturate(1.05); }
+#lights-toggle:checked ~ .showroom-grid label[for="lights-toggle"] {
+  color: #2d2600;
+  background: linear-gradient(135deg, #ffe889, #ffc857);
+  border-color: transparent;
+  box-shadow: 0 18px 38px rgba(255, 200, 87, 0.35);
+}
+.lights-on-text { display: none; }
+#lights-toggle:checked ~ .showroom-grid .lights-off-text { display: none; }
+#lights-toggle:checked ~ .showroom-grid .lights-on-text { display: inline; }
+
+#style-clay:checked ~ .showroom-grid {
+  --surface: rgba(255,255,255,0.78);
+  --accent: #ff3b4f;
+  --accent-strong: #d92b3d;
+}
+#style-premium:checked ~ .showroom-grid {
+  --surface: rgba(245,250,255,0.86);
+  --accent: #007aff;
+  --accent-strong: #0057c8;
+  --line: rgba(0,122,255,0.18);
+}
+#style-sport:checked ~ .showroom-grid {
+  --surface: rgba(255,246,246,0.86);
+  --accent: #d91528;
+  --accent-strong: #971622;
+  --line: rgba(217,21,40,0.2);
+}
+
+#paint-red:checked ~ .showroom-grid { --paint-tint: rgba(227,37,55,0.14); }
+#paint-white:checked ~ .showroom-grid { --paint-tint: rgba(255,255,255,0.10); }
+#paint-black:checked ~ .showroom-grid { --paint-tint: rgba(0,0,0,0.14); }
+#paint-blue:checked ~ .showroom-grid { --paint-tint: rgba(36,96,184,0.14); }
+#paint-green:checked ~ .showroom-grid { --paint-tint: rgba(30,122,58,0.14); }
+#paint-orange:checked ~ .showroom-grid { --paint-tint: rgba(224,103,18,0.14); }
+#paint-pearl:checked ~ .showroom-grid { --paint-tint: rgba(241,230,191,0.16); }
+
+#paint-red:checked ~ .showroom-grid label[for="paint-red"],
+#paint-white:checked ~ .showroom-grid label[for="paint-white"],
+#paint-black:checked ~ .showroom-grid label[for="paint-black"],
+#paint-blue:checked ~ .showroom-grid label[for="paint-blue"],
+#paint-green:checked ~ .showroom-grid label[for="paint-green"],
+#paint-orange:checked ~ .showroom-grid label[for="paint-orange"],
+#paint-pearl:checked ~ .showroom-grid label[for="paint-pearl"] {
+  outline: 4px solid var(--accent);
+  outline-offset: 4px;
+  transform: translateY(-4px);
+}
+
+#a11y-large:checked ~ .site-header,
+#a11y-large:checked ~ .showroom-grid,
+#a11y-large:checked ~ .site-footer {
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+#a11y-contrast:checked ~ .site-header,
+#a11y-contrast:checked ~ .showroom-grid,
+#a11y-contrast:checked ~ .site-footer {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-solid: #ffffff;
+  --text: #000000;
+  --muted: #171717;
+  --line: #000000;
+  --accent: #b00020;
+  --accent-strong: #7f0015;
+  --focus: #003cff;
+}
+
+#a11y-motion:checked ~ .showroom-grid *,
+#a11y-motion:checked ~ .site-header *,
+#a11y-motion:checked ~ .site-footer * {
+  transition: none;
+  animation: none;
+}
+#a11y-motion:checked ~ .showroom-grid .paint-swatch { opacity: 1; }
